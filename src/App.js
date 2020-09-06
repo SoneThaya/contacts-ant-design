@@ -19,6 +19,9 @@ function App() {
     setErrorInfo(errorInfo)
   }
 
+  console.log("values: ", values);
+  console.log("errorInfo: ", errorInfo);
+
   return (
     <>
       <Button

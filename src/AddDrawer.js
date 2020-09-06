@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { Drawer, Form, Input, Button } from 'antd';
 
@@ -7,8 +7,15 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
   const initialValues = {
     firstName: "",
     lastName: "",
-    phoneNumber: "",
+    phoneNumber: null,
   }
+
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState();
+
+  useEffect(() => {
+    forceUpdate({});
+  }, []);
 
   return (
     <Drawer
@@ -20,7 +27,8 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
       maskClosable={false}>
       <h1>Content Here</h1>
 
-        <Form
+      <Form
+        form={form}
         name="basic"
         initialValues={initialValues}
         onFinish={handleOnFinish}
@@ -50,10 +58,20 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
           <Input type="tel" />
         </Form.Item>
 
-        <Form.Item >
-          <Button type="primary" htmlType="submit">
-            Add
-          </Button>
+        <Form.Item shouldUpdate>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length).length
+              }
+            >
+              Add
+            </Button>
+          )}
+          
         </Form.Item>
       </Form>
       
