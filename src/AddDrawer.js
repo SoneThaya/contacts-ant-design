@@ -5,6 +5,7 @@ import { Drawer } from 'antd';
 const AddDrawer = ({show, handleOnClose}) => {
   return (
     <Drawer
+      data-testid="add-contact-drawer"
       title="Add Contact"
       visible={show}
       onClose={handleOnClose}

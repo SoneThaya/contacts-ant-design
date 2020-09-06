@@ -17,9 +17,12 @@ function App() {
         data-testid="add-contact-button"
         onClick={() => setShowDrawer(true)}
       >
-          Add
+        Add
       </Button>
-      <AddDrawer show={showDrawer} handleOnClose={() => setShowDrawer(false)} />
+      
+      <AddDrawer
+        show={showDrawer}
+        handleOnClose={() => setShowDrawer(false)} />
     </>
   );
 }
