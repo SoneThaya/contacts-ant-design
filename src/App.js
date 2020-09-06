@@ -8,6 +8,16 @@ import './App.css';
 function App() {
 
   const [showDrawer, setShowDrawer] = useState(false);
+  const [values, setValues] = useState({});
+  const [errorInfo, setErrorInfo] = useState({});
+
+  const handleAddFormOnFinish = (values) => {
+    setValues(values);
+  }
+
+  const handleAddFormOnFinishFailed = (errorInfo) => {
+    setErrorInfo(errorInfo)
+  }
 
   return (
     <>
@@ -22,7 +32,10 @@ function App() {
       
       <AddDrawer
         show={showDrawer}
-        handleOnClose={() => setShowDrawer(false)} />
+        handleOnClose={() => setShowDrawer(false)}
+        handleOnFinish={handleAddFormOnFinish}
+        handleOnFinishFailed={handleAddFormOnFinishFailed}
+      />
     </>
   );
 }
