@@ -1,13 +1,11 @@
 import React, { useState, Fragment } from 'react';
-import { Button, Layout, Table, Menu, Breadcrumb } from 'antd';
+import { Button, Layout, Table, Menu } from 'antd';
 import { PlusSquareFilled } from '@ant-design/icons';
 import AddDrawer from './AddDrawer';
 import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
-  TeamOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
 
 import './App.css';
