@@ -2,13 +2,13 @@ import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types';
 import { Drawer, Form, Input, Button } from 'antd';
 
-const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }) => {
-  
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: null,
-  }
+const EditContact = ({
+  show,
+  handleOnClose,
+  handleOnFinish,
+  handleOnFinishFailed,
+  initialValues
+}) => {
 
   const [form] = Form.useForm();
   const [, forceUpdate] = useState();
@@ -94,11 +94,12 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
   )
 }
 
-AddDrawer.propTypes = {
+EditContact.propTypes = {
   show: PropTypes.bool.isRequired,
   handleOnClose: PropTypes.func.isRequired,
   handleOnFinish: PropTypes.func.isRequired,
   handleOnFinishFailed: PropTypes.func.isRequired,
+  initialValues: PropTypes.object.isRequired,
 };
 
-export default AddDrawer
+export default EditContact;

@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { Button, Layout, Table, Menu } from 'antd';
-import { PlusSquareFilled, DeleteOutlined } from '@ant-design/icons';
-import AddDrawer from './AddDrawer';
+import { PlusSquareFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import EditContact from './EditContact';
 import { connect } from 'react-redux';
 import { addContact, deleteContact } from './redux/contacts/actions';
 
@@ -14,6 +14,11 @@ const App = ({ contacts, addContact, deleteContact }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [errorInfo, setErrorInfo] = useState({});
   const [collapsed, setCollapsed] = useState(false);
+  const [contact, setContact] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: null,
+  });
 
   const onCollapse = (isCollapsed) => {
     setCollapsed(isCollapsed );
@@ -29,6 +34,18 @@ const App = ({ contacts, addContact, deleteContact }) => {
 
   const handleAddFormOnFinishFailed = (errorInfo) => {
     setErrorInfo(errorInfo)
+  }
+
+  const handleOnClose = () => {
+    setShowDrawer(false);
+    setContact({firstName: "",
+    lastName: "",
+    phoneNumber: null,});
+  }
+
+  const openEditDrawer = (contact) => {
+    setContact(contact);
+    setShowDrawer(true);
   }
 
   const columns = [
@@ -50,11 +67,16 @@ const App = ({ contacts, addContact, deleteContact }) => {
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
+      render: (text, contact) => (
         <span>
           <Button
-            onClick={() => deleteContact(record.key)}
+            onClick={() => deleteContact(contact.key)}
             icon={<DeleteOutlined />}
+          />
+          <Button
+            style={{ marginLeft: 5 }}
+            onClick={() => openEditDrawer(contact)}
+            icon={<EditOutlined />}
           />
         </span>
       ),
@@ -100,11 +122,12 @@ const App = ({ contacts, addContact, deleteContact }) => {
             <Table dataSource={contacts} columns={columns} />
           </Layout.Content>
           
-          <AddDrawer
+          <EditContact
             show={showDrawer}
-            handleOnClose={() => setShowDrawer(false)}
+            handleOnClose={handleOnClose}
             handleOnFinish={handleAddFormOnFinish}
             handleOnFinishFailed={handleAddFormOnFinishFailed}
+            initialValue={contact}
           />
         </Fragment>
         </div>
