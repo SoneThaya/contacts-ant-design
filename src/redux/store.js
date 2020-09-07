@@ -11,16 +11,14 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ['contacts'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(
+export const store = createStore(
   persistedReducer,
   applyMiddleware(thunk)
 );
 
-export default {
-  store,
-  persister: persistStore(store),
-}
+export const persistedStore = persistStore(store);
