@@ -2,21 +2,16 @@ import React, { useState, Fragment } from 'react';
 import { Button, Layout, Table, Menu } from 'antd';
 import { PlusSquareFilled } from '@ant-design/icons';
 import AddDrawer from './AddDrawer';
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-} from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { addContact } from './redux/contacts/actions';
 
 import './App.css';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
-function App() {
+const App = ({ contacts, addContact }) => {
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const [values, setValues] = useState([]);
   const [errorInfo, setErrorInfo] = useState({});
   const [collapsed, setCollapsed] = useState(false);
 
@@ -25,10 +20,10 @@ function App() {
   };
 
   const handleAddFormOnFinish = (data) => {
-    setValues([...values, {
-      key: values.length + 1,
+    addContact({
+      key: contacts.length + 1,
       ...data,
-    },]);
+    })
     setShowDrawer(false);
   }
 
@@ -55,7 +50,7 @@ function App() {
   ];
 
   return (
-    <>
+    
     <Layout style={{ minHeight: '100vh' }}>
     <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
       <div className="logo" />
@@ -90,7 +85,7 @@ function App() {
             </div>
             
           <Layout.Content>
-            <Table dataSource={values} columns={columns} />
+            <Table dataSource={contacts} columns={columns} />
           </Layout.Content>
           
           <AddDrawer
@@ -103,12 +98,25 @@ function App() {
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-    </Layout>
+        </Layout>
       </Layout>
       
-      
-    </>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    contacts: state.contacts && state.contacts.allContacts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addContact: (contact) => {
+      dispatch(addContact(contact));
+    }
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
