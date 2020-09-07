@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types';
 import { Drawer, Form, Input, Button } from 'antd';
 
@@ -33,6 +33,7 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
         initialValues={initialValues}
         onFinish={handleOnFinish}
         onFinishFailed={handleOnFinishFailed}
+        layout="vertical"
         >
         <Form.Item
           label="First Name"
@@ -60,19 +61,33 @@ const AddDrawer = ({ show, handleOnClose, handleOnFinish, handleOnFinishFailed }
 
         <Form.Item shouldUpdate>
           {() => (
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                form.getFieldsError().filter(({ errors }) => errors.length).length
-              }
-            >
-              Add
-            </Button>
+            <Fragment>
+              <Button
+                style={{ marginRight: 20 }}
+                type="primary"
+                htmlType="submit"
+                disabled={
+                  !form.isFieldsTouched(true) ||
+                  form.getFieldsError().filter(({ errors }) => errors.length).length
+                }
+              >
+                Add
+              </Button>
+
+              <Button
+                htmlType="button"
+                onClick={() => form.resetFields()}
+              >
+                Reset
+              </Button>
+            </Fragment>
           )}
+
+          
           
         </Form.Item>
+
+       
       </Form>
       
     </Drawer>
