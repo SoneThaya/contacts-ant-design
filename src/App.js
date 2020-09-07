@@ -1,15 +1,15 @@
 import React, { useState, Fragment } from 'react';
 import { Button, Layout, Table, Menu } from 'antd';
-import { PlusSquareFilled } from '@ant-design/icons';
+import { PlusSquareFilled, DeleteOutlined } from '@ant-design/icons';
 import AddDrawer from './AddDrawer';
 import { connect } from 'react-redux';
-import { addContact } from './redux/contacts/actions';
+import { addContact, deleteContact } from './redux/contacts/actions';
 
 import './App.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const App = ({ contacts, addContact }) => {
+const App = ({ contacts, addContact, deleteContact }) => {
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [errorInfo, setErrorInfo] = useState({});
@@ -47,6 +47,18 @@ const App = ({ contacts, addContact }) => {
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <span>
+          <Button
+            onClick={() => deleteContact(record.key)}
+            icon={<DeleteOutlined />}
+          />
+        </span>
+      ),
+    }
   ];
 
   return (
@@ -114,6 +126,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addContact: (contact) => {
       dispatch(addContact(contact));
+    },
+    deleteContact: (key) => {
+      dispatch(deleteContact(key))
     }
   };
 };
