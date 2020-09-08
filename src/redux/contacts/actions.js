@@ -1,9 +1,18 @@
-const { ADD_CONTACT, DELETE_CONTACT } = require("./actionTypes")
+const { ADD_CONTACT, DELETE_CONTACT, EDIT_CONTACT } = require("./actionTypes")
 
 export const addContact = (contact) => {
   return (dispatch) => {
     dispatch({
       type: ADD_CONTACT,
+      payload: contact
+    });
+  };
+};
+
+export const editContact = (contact) => {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_CONTACT,
       payload: contact
     });
   };

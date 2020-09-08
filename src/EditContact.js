@@ -7,7 +7,9 @@ const EditContact = ({
   handleOnClose,
   handleOnFinish,
   handleOnFinishFailed,
-  initialValues
+  initialValues,
+  mode,
+  handleEditOnFinish,
 }) => {
 
   const [form] = Form.useForm();
@@ -21,7 +23,7 @@ const EditContact = ({
     <Drawer
       width={512}
       data-testid="add-contact-drawer"
-      title="Add Contact"
+      title={`${mode === 'edit' ? 'Edit Contact' : 'Add Contact'}`}
       visible={show}
       onClose={handleOnClose}
       maskClosable={false}>
@@ -31,9 +33,10 @@ const EditContact = ({
         form={form}
         name="basic"
         initialValues={initialValues}
-        onFinish={handleOnFinish}
+        onFinish={mode === "edit" ? handleEditOnFinish : handleOnFinish}
         onFinishFailed={handleOnFinishFailed}
         layout="vertical"
+        destroyOnClose={true}
         >
         <Form.Item
           label="First Name"
@@ -71,9 +74,9 @@ const EditContact = ({
                   form.getFieldsError().filter(({ errors }) => errors.length).length
                 }
               >
-                Add
+                {mode === "edit" ? "Edit" : "Add"}
               </Button>
-
+              
               <Button
                 htmlType="button"
                 onClick={() => form.resetFields()}
@@ -82,11 +85,8 @@ const EditContact = ({
               </Button>
             </Fragment>
           )}
-
-          
           
         </Form.Item>
-
        
       </Form>
       
@@ -100,6 +100,8 @@ EditContact.propTypes = {
   handleOnFinish: PropTypes.func.isRequired,
   handleOnFinishFailed: PropTypes.func.isRequired,
   initialValues: PropTypes.object.isRequired,
+  mode: PropTypes.oneOf(['add', 'edit']),
+  handleEditOnFinish: PropTypes.func.isRequired,
 };
 
 export default EditContact;
